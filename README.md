@@ -73,9 +73,9 @@ Pour valider l'initialisation du projet:
 
 ## 📚 Documentation
 
-- [Règles complètes](./RULES.md)
-- [Stack technique](./STACK.md)
-- [Plan de développement](./plan.md)
+- [Règles complètes](./docs/RULES.md)
+- [Stack technique](./docs/STACK.md)
+- [Plan de développement](./docs/plan.md)
 
 ## 🔧 Commandes utiles
 
