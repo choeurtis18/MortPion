@@ -1,0 +1,17 @@
+[build]
+  base = "apps/client"
+  publish = "dist"
+  command = "cd ../.. && pnpm install && pnpm build:client"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "pnpm dev"
+  port = 5173
+  publish = "dist"
