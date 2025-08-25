@@ -25,6 +25,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
+      "https://mortpion-choeurtis.up.railway.app",
       ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL] : [])
     ],
     methods: ["GET", "POST"],
