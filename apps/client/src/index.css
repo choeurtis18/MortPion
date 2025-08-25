@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Disable global scrolling */
+/* Allow global scrolling */
 html, body {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100%;
 }
 
 #root {
-  height: 100vh;
+  min-height: 100%;
 }

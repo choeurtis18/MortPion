@@ -170,7 +170,7 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
         </div>
 
         {/* Player Name Input */}
-        <div className="p-4 bg-white border-b">
+        <div className="px-4 py-2 bg-white border-b">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Votre pseudo
           </label>
@@ -188,7 +188,7 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
         </div>
 
         {/* Action Buttons */}
-        <div className="p-4 bg-white border-b space-y-3">
+        <div className="px-4 py-2 bg-white border-b space-y-3">
           <button
             onClick={() => setShowCreateRoom(true)}
             disabled={!isConnected || !playerName.trim() || loading}
@@ -222,41 +222,36 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Filtrer par type
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { value: 'all', label: 'Toutes', icon: '🏠' },
-                { value: 'public', label: 'Publiques', icon: '🌐' },
-                { value: 'private', label: 'Privées', icon: '🔒' }
-              ].map((filter) => (
-                <button
-                  key={filter.value}
-                  onClick={() => setFilterType(filter.value as 'all' | 'public' | 'private')}
-                  className={`py-2 px-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-1 ${
-                    filterType === filter.value
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  <span className="text-xs">{filter.icon}</span>
-                  <span>{filter.label}</span>
-                </button>
-              ))}
-            </div>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { value: 'all', label: 'Toutes', icon: '🏠' },
+              { value: 'public', label: 'Publiques', icon: '🌐' },
+              { value: 'private', label: 'Privées', icon: '🔒' }
+            ].map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setFilterType(filter.value as 'all' | 'public' | 'private')}
+                className={`py-2 px-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-1 ${
+                  filterType === filter.value
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <span className="text-xs">{filter.icon}</span>
+                <span>{filter.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Rooms List */}
         <div className="flex-1 p-4 overflow-hidden flex flex-col">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3 flex-shrink-0">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex-shrink-0">
             Salles disponibles ({filteredRooms.length}{filteredRooms.length !== rooms.length ? ` sur ${rooms.length}` : ''})
           </h3>
           
           {filteredRooms.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center text-gray-500">
               <div className="text-4xl mb-2">🏠</div>
               {rooms.length === 0 ? (
                 <>

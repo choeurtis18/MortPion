@@ -45,7 +45,7 @@ export const MobilePlayerInventory: React.FC<MobilePlayerInventoryProps> = ({
     <div className={`
       sticky bottom-0 bg-white border-t-2 p-4 transition-all duration-200 z-10
       ${isCurrentPlayer ? `${colorClasses[colorKey]} border-t-4` : 'border-gray-200'}
-      min-h-[140px] flex flex-col justify-center
+       flex flex-col justify-center
     `}>
       {/* En-tête du joueur actif */}
       <div className="flex items-center justify-between mb-4">
@@ -99,11 +99,6 @@ export const MobilePlayerInventory: React.FC<MobilePlayerInventoryProps> = ({
                 ${inventory[size] > 0 ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-600'}
               `}>
                 {inventory[size]}
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-xs font-medium text-gray-700">
-                {size === 'P' ? 'Petit' : size === 'M' ? 'Moyen' : 'Grand'}
               </div>
             </div>
           </div>
