@@ -258,7 +258,7 @@ function App() {
       </div>
 
       {/* Mobile Player Inventory - Sticky bottom */}
-      {currentPlayer && (
+      {currentPlayer && gameStatus === 'playing' && (
         <MobilePlayerInventory
           inventory={currentPlayer.inventory}
           color={currentPlayer.color}

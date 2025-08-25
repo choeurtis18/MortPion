@@ -17,8 +17,8 @@ const colorClasses = {
 };
 
 const sizeClasses = {
-  P: 'w-7 h-7 text-xs', // Petit
-  M: 'w-9 h-9 text-xs', // Moyen  
+  P: 'w-8 h-8 text-xs', // Petit
+  M: 'w-10 h-10 text-sm', // Moyen  
   G: 'w-12 h-12 text-sm', // Grand
 };
 

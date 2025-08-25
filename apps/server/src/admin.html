@@ -119,13 +119,12 @@
                 <div class="loading">Chargement du statut...</div>
             </div>
             
-            <div style="margin-top: 20px;">
-                <button id="toggle-email" class="btn-primary" disabled>
-                    Activer les notifications
+            <div class="controls">
+                <button id="toggle-email" class="btn btn-primary">
+                    <span id="toggle-text">Activer</span>
                 </button>
-                <button id="refresh-status" class="btn-primary">
-                    🔄 Actualiser
-                </button>
+                <button id="refresh-status" class="btn btn-secondary">Actualiser</button>
+                <button id="test-email" class="btn btn-success">Tester Email</button>
             </div>
             
             <div id="message-area"></div>
@@ -238,9 +237,40 @@
             }, 5000);
         }
         
+        async function testEmail() {
+            const testButton = document.getElementById('test-email');
+            testButton.disabled = true;
+            testButton.innerHTML = 'Envoi...';
+            
+            try {
+                const response = await fetch('/admin/email/test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('✅ Email de test envoyé avec succès!', 'success');
+                } else {
+                    showMessage(`❌ Erreur: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                showMessage('❌ Erreur de connexion lors du test', 'error');
+                console.error('Error testing email:', error);
+            } finally {
+                testButton.disabled = false;
+                testButton.innerHTML = 'Tester Email';
+            }
+        }
+
         // Event listeners
         document.getElementById('toggle-email').addEventListener('click', toggleEmailNotifications);
         document.getElementById('refresh-status').addEventListener('click', fetchEmailStatus);
+        document.getElementById('test-email').addEventListener('click', testEmail);
         
         // Initial load
         fetchEmailStatus();

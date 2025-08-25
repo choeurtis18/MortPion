@@ -17,6 +17,15 @@ class EmailService {
   private transporter: nodemailer.Transporter | null = null;
 
   constructor() {
+    console.log('Environment variables:', {
+      EMAIL_NOTIFICATIONS_ENABLED: process.env.EMAIL_NOTIFICATIONS_ENABLED,
+      ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+      SMTP_HOST: process.env.SMTP_HOST,
+      SMTP_PORT: process.env.SMTP_PORT,
+      SMTP_USER: process.env.SMTP_USER,
+      SMTP_PASS: process.env.SMTP_PASS ? 'SET' : 'NOT SET'
+    });
+    
     this.config = {
       enabled: process.env.EMAIL_NOTIFICATIONS_ENABLED === 'true',
       adminEmail: process.env.ADMIN_EMAIL || '',
@@ -128,10 +137,17 @@ Participants: ${gameData.players.join(', ')}
   }
 
   public getStatus() {
+    console.log('Debug config:', {
+      enabled: this.config.enabled,
+      smtpUser: this.config.smtpUser ? 'SET' : 'NOT SET',
+      smtpPass: this.config.smtpPass ? 'SET' : 'NOT SET',
+      adminEmail: this.config.adminEmail || 'NOT SET'
+    });
+    
     return {
       enabled: this.config.enabled,
-      configured: this.transporter !== null,
-      adminEmail: this.config.adminEmail ? `${this.config.adminEmail.substring(0, 3)}***` : 'Not set'
+      configured: this.config.smtpUser !== '' && this.config.smtpPass !== '' && this.config.adminEmail !== '',
+      adminEmail: this.config.adminEmail || 'Not set'
     };
   }
 }

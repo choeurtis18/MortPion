@@ -5,9 +5,13 @@ import cors from 'cors';
 import pino from 'pino';
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { Room } from './models/Room.js';
 import { Player } from './models/Player.js';
 import { emailService } from './services/emailService.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -86,6 +90,31 @@ app.post('/admin/email/toggle', (req, res) => {
     message: `Email notifications ${enabled ? 'enabled' : 'disabled'}`,
     status: emailService.getStatus()
   });
+});
+
+// Test email endpoint
+app.post('/admin/email/test', async (req, res) => {
+  try {
+    await emailService.sendGameStartNotification({
+      roomName: 'Test Room',
+      playerCount: 2,
+      players: ['TestPlayer1', 'TestPlayer2'],
+      isPrivate: false,
+      timestamp: new Date()
+    });
+    
+    res.json({ 
+      success: true,
+      message: 'Email de test envoyé avec succès!' 
+    });
+  } catch (error) {
+    logger.error('Test email failed:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Échec de l\'envoi de l\'email de test',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
 });
 
 // List available rooms endpoint
