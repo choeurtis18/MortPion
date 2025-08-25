@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ReplayVoting } from './components/ReplayVoting';
-import { TurnTimer } from './components/TurnTimer';
 import { PlayersModal } from './components/PlayersModal';
 import { useSimpleLocalGame } from './hooks/useSimpleLocalGame';
 import { useMultiplayerGame } from './hooks/useMultiplayerGame';
@@ -232,20 +231,11 @@ function App() {
             gameResult={gameResult}
             isMyTurn={isLocalMode ? true : multiGame.isMyTurn}
             isLocalMode={isLocalMode}
+            timeLeft={gameMode === 'online-game' ? multiGame.gameState?.turnTimeLeft : undefined}
           />
         )}
 
 
-        {/* Turn Timer - Only for multiplayer */}
-        {gameMode === 'online-game' && gameStatus === 'playing' && multiGame.gameState?.turnTimeLeft !== undefined && (
-          <div className="px-4 py-2">
-            <TurnTimer
-              timeLeft={multiGame.gameState.turnTimeLeft}
-              isMyTurn={multiGame.isMyTurn}
-              playerName={multiGame.activePlayer?.nickname || 'Joueur'}
-            />
-          </div>
-        )}
 
         {/* Game Board - Prend l'espace disponible */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-2 gap-4">
