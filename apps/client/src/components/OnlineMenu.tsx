@@ -250,8 +250,8 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
         </div>
 
         {/* Rooms List */}
-        <div className="flex-1 p-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">
+        <div className="flex-1 p-4 overflow-hidden flex flex-col">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3 flex-shrink-0">
             Salles disponibles ({filteredRooms.length}{filteredRooms.length !== rooms.length ? ` sur ${rooms.length}` : ''})
           </h3>
           
@@ -271,11 +271,11 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
               )}
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="flex-1 overflow-y-auto space-y-3">
               {filteredRooms.map((room) => (
                 <div
                   key={room.id}
-                  className="bg-white p-4 rounded-lg shadow-sm border"
+                  className="bg-white p-4 rounded-lg shadow-sm border flex-shrink-0"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>

@@ -54,7 +54,7 @@ export const Cell: React.FC<CellProps> = ({
       </div>
       
       {/* Indicateur de position pour debug */}
-      <div className="absolute top-1 left-1 text-xs text-gray-400 font-mono">
+      <div className="absolute top-0.5 left-0.5 text-[10px] text-gray-400 font-mono">
         {position.row},{position.col}
       </div>
     </div>

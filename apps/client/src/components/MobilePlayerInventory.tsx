@@ -54,15 +54,20 @@ export const MobilePlayerInventory: React.FC<MobilePlayerInventoryProps> = ({
             <h3 className={`font-semibold text-lg ${isCurrentPlayer ? 'text-gray-800' : 'text-gray-600'}`}>
               {playerName}
             </h3>
+            {/* Message d'aide pour le joueur actif */}
             {isCurrentPlayer && (
-              <p className="text-sm text-gray-600">Sélectionnez une pièce</p>
+              <div>
+                {selectedPiece ? (
+                  <div className="text-sm text-green-600 font-medium">
+                    ✓ {selectedPiece.size} sélectionné - Cliquez sur le plateau
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-500">
+                    Touchez une pièce pour la sélectionner
+                  </div>
+                )}
+              </div>
             )}
-          </div>
-        </div>
-        <div className="text-right">
-          <div className="text-sm text-gray-500">Pièces restantes</div>
-          <div className="text-lg font-bold text-gray-700">
-            {inventory.P + inventory.M + inventory.G}
           </div>
         </div>
       </div>
@@ -81,7 +86,7 @@ export const MobilePlayerInventory: React.FC<MobilePlayerInventoryProps> = ({
                   selectedPiece?.size === size && selectedPiece?.color === color
                 }
                 className={`
-                  transition-all duration-200 min-h-[60px] min-w-[60px]
+                  transition-all duration-200 !w-12 !h-12 !text-xs
                   ${inventory[size] === 0 ? 'opacity-30 cursor-not-allowed' : ''}
                   ${isCurrentPlayer && inventory[size] > 0 ? 'hover:scale-110 cursor-pointer' : 'cursor-default'}
                   ${!isCurrentPlayer ? 'opacity-60' : ''}
@@ -104,20 +109,6 @@ export const MobilePlayerInventory: React.FC<MobilePlayerInventoryProps> = ({
         ))}
       </div>
 
-      {/* Message d'aide pour le joueur actif */}
-      {isCurrentPlayer && (
-        <div className="mt-3 text-center">
-          {selectedPiece ? (
-            <div className="text-sm text-green-600 font-medium">
-              ✓ {selectedPiece.size} sélectionné - Cliquez sur le plateau
-            </div>
-          ) : (
-            <div className="text-sm text-gray-500">
-              Touchez une pièce pour la sélectionner
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };

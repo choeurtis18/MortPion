@@ -25,7 +25,7 @@ export const Board: React.FC<BoardProps> = ({
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg">
-      <div className="grid grid-cols-3 gap-2 w-80 h-80 mx-auto">
+      <div className="grid grid-cols-3 gap-2 w-72 h-72 mx-auto">
         {Array.from({ length: 3 }, (_, row) =>
           Array.from({ length: 3 }, (_, col) => (
             <Cell

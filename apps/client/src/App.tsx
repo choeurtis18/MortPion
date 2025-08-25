@@ -100,7 +100,7 @@ function App() {
   // Menu principal - Mobile-only design (même sur desktop)
   if (gameMode === 'menu') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
+      <div className="h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
         <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center p-4">
           <div className="bg-white rounded-xl shadow-lg w-full">
           {/* Header */}
@@ -155,7 +155,7 @@ function App() {
   // Mode Selection Screen
   if (gameMode === 'mode-selection') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
+      <div className="h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
         <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center p-4">
           <ModeSelection
             onSelectLocal={() => setGameMode('local-config')}
@@ -174,7 +174,7 @@ function App() {
   // Local Game Configuration Screen
   if (gameMode === 'local-config') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
+      <div className="h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
         <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center p-4">
           <LocalGameConfig
             onStartGame={(playerCount) => {
@@ -191,8 +191,8 @@ function App() {
   // Online Menu Screen
   if (gameMode === 'online-menu') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
-        <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col min-h-screen">
+      <div className="h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
+        <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col h-screen">
           <OnlineMenu
             onJoinGame={handleJoinRoom}
             onBack={() => setGameMode('mode-selection')}
@@ -212,8 +212,8 @@ function App() {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
-        <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col min-h-screen">
+      <div className="h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center">
+        <div className="w-full max-w-sm bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col h-screen">
         {/* Mobile Navbar */}
         <MobileNavbar
           onBackClick={handleBackToMenu}
