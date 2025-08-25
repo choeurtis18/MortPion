@@ -20,36 +20,21 @@ export function createEmptyBoard(): Board {
   return Array.from({ length: 9 }, () => ({ P: null, M: null, G: null }));
 }
 
-// Check if a move is legal (with proper Otrio nesting rules: P < M < G)
+// Check if a move is legal (replacement rules: larger pieces replace smaller ones)
 export function isLegalMove(board: Board, cellIndex: number, size: Size, color?: Color): boolean {
   if (cellIndex < 0 || cellIndex > 8) return false;
   const cell = board[cellIndex];
   
-  // The size slot must be empty
-  if (cell[size] !== null) return false;
-  
-  // Otrio nesting rules: P < M < G (smaller pieces go inside larger ones)
-  // Colors can be different - only size matters for nesting!
-  
-  if (size === 'G') {
-    // G can be placed on:
-    // - Empty cell [null, null, null] ✅
-    // - Cell with only M [null, M, null] ✅  
-    // - Cell with only P [null, null, P] ✅
-    // - Cell with M+P [null, M, P] ✅
-    // G cannot be placed if G already exists
-    return cell.G === null;
-  } else if (size === 'M') {
-    // M can be placed on:
-    // - Empty cell [null, null, null] ✅
-    // - Cell with only P [null, null, P] ✅
-    // M cannot be placed if M exists OR if G exists
-    return cell.M === null && cell.G === null;
-  } else { // size === 'P'
-    // P can be placed on:
-    // - Empty cell [null, null, null] ✅
-    // P cannot be placed if P exists OR if M exists OR if G exists
+  // A piece can only be placed if there's no piece of the same size or larger
+  if (size === 'P') {
+    // P can be placed if no piece exists at all
     return cell.P === null && cell.M === null && cell.G === null;
+  } else if (size === 'M') {
+    // M can be placed if no M or G exists (replaces P if present)
+    return cell.M === null && cell.G === null;
+  } else { // size === 'G'
+    // G can be placed anywhere (replaces any smaller piece)
+    return cell.G === null;
   }
 }
 
@@ -60,7 +45,24 @@ export function applyMove(board: Board, cellIndex: number, size: Size, color: Co
   }
   
   const newBoard = [...board];
-  newBoard[cellIndex] = { ...newBoard[cellIndex], [size]: color };
+  const newCell = { ...newBoard[cellIndex] };
+  
+  // When placing a piece, remove any smaller pieces (replacement logic)
+  if (size === 'G') {
+    // G replaces everything
+    newCell.P = null;
+    newCell.M = null;
+    newCell.G = color;
+  } else if (size === 'M') {
+    // M replaces P only
+    newCell.P = null;
+    newCell.M = color;
+  } else { // size === 'P'
+    // P doesn't replace anything (can only be placed on empty cell)
+    newCell.P = color;
+  }
+  
+  newBoard[cellIndex] = newCell;
   return newBoard;
 }
 

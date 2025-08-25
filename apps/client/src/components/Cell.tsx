@@ -30,35 +30,26 @@ export const Cell: React.FC<CellProps> = ({
       `}
       title={`Position ${position.row + 1},${position.col + 1}`}
     >
-      <div className="absolute inset-2 flex items-center justify-center">
-        {/* Affichage de l'imbrication complète P/M/G */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          {/* G (Grand) - Pièce extérieure */}
-          {pieces.G && (
+      <div className="absolute inset-1 flex items-center justify-center">
+        {/* Affichage d'une seule pièce - la plus grande présente */}
+        <div className="relative flex items-center justify-center">
+          {/* Affiche la pièce la plus grande présente (G > M > P) */}
+          {pieces.G ? (
             <Piece 
               size="G" 
               color={pieces.G} 
-              className="absolute z-10" 
             />
-          )}
-          
-          {/* M (Moyen) - Pièce intermédiaire */}
-          {pieces.M && (
+          ) : pieces.M ? (
             <Piece 
               size="M" 
               color={pieces.M} 
-              className={`absolute z-20 ${pieces.G ? 'opacity-90' : ''}`}
             />
-          )}
-          
-          {/* P (Petit) - Pièce intérieure */}
-          {pieces.P && (
+          ) : pieces.P ? (
             <Piece 
               size="P" 
               color={pieces.P} 
-              className={`absolute z-30 ${pieces.M || pieces.G ? 'opacity-95' : ''}`}
             />
-          )}
+          ) : null}
         </div>
       </div>
       

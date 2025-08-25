@@ -17,9 +17,9 @@ const colorClasses = {
 };
 
 const sizeClasses = {
-  P: 'w-6 h-6 text-xs', // Petit
-  M: 'w-8 h-8 text-xs', // Moyen  
-  G: 'w-12 h-12 text-sm', // Grand
+  P: 'w-8 h-8 text-xs', // Petit
+  M: 'w-12 h-12 text-sm', // Moyen  
+  G: 'w-16 h-16 text-base', // Grand
 };
 
 export const Piece: React.FC<PieceProps> = ({ 
