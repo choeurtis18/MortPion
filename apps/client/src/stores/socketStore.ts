@@ -16,7 +16,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
   lastPong: null,
 
   connect: () => {
-    const socket = io(import.meta.env.VITE_SERVER_URL ?? 'http://localhost:3002');
+    const socket = io(import.meta.env.VITE_SERVER_URL);
     
     socket.on('connect', () => {
       console.log('Connected to server');

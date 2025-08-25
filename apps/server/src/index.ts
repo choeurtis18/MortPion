@@ -550,7 +550,7 @@ io.on('connection', (socket) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT;
 
 async function startServer() {
   try {

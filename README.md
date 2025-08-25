@@ -34,8 +34,8 @@ pnpm dev
 
 ### URLs
 - Client: http://localhost:5173
-- Serveur: http://localhost:3002
-- Health check: http://localhost:3002/health
+- Serveur: http://localhost:3000
+- Health check: http://localhost:3000/health
 
 ## 📁 Structure du projet
 
@@ -61,7 +61,7 @@ MortPion/
 
 Pour valider l'initialisation du projet:
 
-1. ✅ Serveur démarre sur port 3002 avec route `/health`
+1. ✅ Serveur démarre sur port 3000 avec route `/health`
 2. ✅ Client démarre sur port 5173 avec interface "Hello"
 3. ✅ Bouton "Ping Server" fonctionne (handshake Socket.io)
 4. ✅ Redis connecté avec clé de test (TTL 10s)

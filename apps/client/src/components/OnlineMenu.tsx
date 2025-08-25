@@ -37,7 +37,7 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
   // Fetch rooms from server
   const fetchRooms = async () => {
     try {
-      const response = await fetch('http://localhost:3002/rooms');
+      const response = await fetch(import.meta.env.VITE_SERVER_URL + '/rooms');
       const data = await response.json();
       setRooms(data.rooms || []);
     } catch (error) {
