@@ -4,8 +4,10 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import pino from 'pino';
 import dotenv from 'dotenv';
+import path from 'path';
 import { Room } from './models/Room.js';
 import { Player } from './models/Player.js';
+import { emailService } from './services/emailService.js';
 
 dotenv.config();
 
@@ -60,6 +62,29 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     redis: mockRedis.isReady ? 'connected (mock)' : 'disconnected'
+  });
+});
+
+// Admin panel route
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+// Admin routes for email notifications
+app.get('/admin/email/status', (req, res) => {
+  res.json(emailService.getStatus());
+});
+
+app.post('/admin/email/toggle', (req, res) => {
+  const { enabled } = req.body;
+  if (typeof enabled !== 'boolean') {
+    return res.status(400).json({ error: 'enabled must be a boolean' });
+  }
+  
+  emailService.toggleNotifications(enabled);
+  res.json({ 
+    message: `Email notifications ${enabled ? 'enabled' : 'disabled'}`,
+    status: emailService.getStatus()
   });
 });
 
@@ -317,6 +342,18 @@ io.on('connection', (socket) => {
       // Auto-start game if room is full
       if (room.players.length === room.capacity) {
         room.startGame();
+        
+        // Send email notification for new game
+        emailService.sendGameStartNotification({
+          roomName: room.name,
+          playerCount: room.players.length,
+          players: room.players.map(p => p.nickname),
+          isPrivate: room.isPrivate,
+          timestamp: new Date()
+        }).catch(error => {
+          logger.error('Failed to send game start notification:', error);
+        });
+        
         const gameState = room.game.getGameState();
         io.to(roomId).emit('game-started', {
           message: 'Game started!',
