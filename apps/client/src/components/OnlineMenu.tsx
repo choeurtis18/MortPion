@@ -182,6 +182,9 @@ export function OnlineMenu({ onBack, onJoinGame, playerName, setPlayerName }: On
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             maxLength={20}
           />
+          <p className="text-sm text-gray-500 mt-2">
+            Entrez un pseudo pour jouer
+          </p>
         </div>
 
         {/* Action Buttons */}
