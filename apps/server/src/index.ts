@@ -350,6 +350,13 @@ io.on('connection', (socket) => {
         return;
       }
       
+      // Check for duplicate nicknames
+      const existingPlayerWithName = room.players.find(p => p.nickname === playerName);
+      if (existingPlayerWithName) {
+        socket.emit('join-error', { message: 'Ce nom est déjà utilisé dans cette room' });
+        return;
+      }
+      
       // Check room capacity
       if (room.players.length >= room.capacity) {
         socket.emit('join-error', { message: 'Room is full' });
