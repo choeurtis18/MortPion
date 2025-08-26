@@ -29,7 +29,7 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
                 🎯 Objectif
               </h3>
               <p className="text-gray-600">
-                Soyez le premier à aligner 3 pièces de votre couleur selon les conditions de victoire.
+                Soyez le premier à aligner 3 pièces de votre couleur selon les conditions de victoire. Comme dans un morpion classique
               </p>
             </section>
 
@@ -62,14 +62,6 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
                     Même si vous avez une pièce dans l'alignement
                   </p>
                 </div>
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                  <p className="text-red-800 font-medium mb-1">
-                    ❌ Pièce adverse plus grande interfère
-                  </p>
-                  <p className="text-sm text-red-700">
-                    Si une pièce adverse plus grande est présente dans votre alignement
-                  </p>
-                </div>
               </div>
             </section>
 
@@ -92,8 +84,10 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
                   <span>Grande pièce - c'est la plus grande</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-500 font-bold">G {">"} M {">"} P</span>
-                  <span>Ce qui veux dire que si l'adversaire place un P vous pouvez jouer un M ou un G par dessus</span>
+                  <span>
+                    <span className="text-blue-500 font-bold">G {">"} M {">"} P </span>
+                    Ce qui veux dire que si l'adversaire place un P vous pouvez jouer un M ou un G par dessus
+                  </span>
                 </div>
               </div>
             </section>
