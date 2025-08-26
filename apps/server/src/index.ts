@@ -36,7 +36,12 @@ const io = new Server(server, {
     ],
     methods: ["GET", "POST"],
     credentials: true
-  }
+  },
+  // Configuration pour améliorer la stabilité mobile
+  pingTimeout: 60000, // 60s au lieu de 20s par défaut
+  pingInterval: 25000, // 25s par défaut
+  transports: ['websocket', 'polling'], // Fallback sur polling si WebSocket échoue
+  allowEIO3: true // Compatibilité avec anciennes versions
 });
 
 // Mock Redis for validation (will be replaced with real Redis later)
@@ -149,18 +154,30 @@ const rooms = new Map<string, Room>();
 setInterval(() => {
   const now = Date.now();
   const ROOM_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
+  const DISCONNECTION_GRACE_PERIOD = 2 * 60 * 1000; // 2 minutes grace period
   
   for (const [roomId, room] of rooms.entries()) {
-    const roomAge = now - room.createdAt; // FIXED: createdAt is already a number
+    const roomAge = now - room.createdAt;
     const isEmpty = room.players.length === 0;
     const isExpired = roomAge > ROOM_TTL;
     
-    if (isEmpty || isExpired) {
+    // Check for disconnection grace period
+    const hasDisconnectionGracePeriod = room.disconnectionTime && 
+      (now - room.disconnectionTime) < DISCONNECTION_GRACE_PERIOD;
+    
+    if (isEmpty && !hasDisconnectionGracePeriod) {
       rooms.delete(roomId);
-      logger.info(`Room ${roomId} cleaned up (${isEmpty ? 'empty' : 'expired'})`);
+      logger.info(`Room ${roomId} cleaned up (empty)`);
+    } else if (isExpired) {
+      rooms.delete(roomId);
+      logger.info(`Room ${roomId} cleaned up (expired)`);
+    } else if (room.disconnectionTime && (now - room.disconnectionTime) >= DISCONNECTION_GRACE_PERIOD) {
+      // Grace period expired, clean up disconnected room
+      rooms.delete(roomId);
+      logger.info(`Room ${roomId} cleaned up (disconnection grace period expired)`);
     }
   }
-}, 5 * 60 * 1000); // Run every 5 minutes
+}, 30 * 1000); // Run every 30 seconds for better responsiveness
 
 // Turn timer system - Check for timeouts and broadcast timer updates every second
 setInterval(() => {
@@ -575,9 +592,8 @@ io.on('connection', (socket) => {
             }
           }
         } else if (room.game.status === 'playing') {
-          // In-game: handle current player disconnection
+          // In-game: handle current player disconnection with grace period
           if (room.game.currentPlayerId === socket.id) {
-            // Current player disconnected - skip their turn
             logger.info(`Current player ${player.nickname} disconnected, skipping turn in room ${roomId}`);
             room.game.skipTurn();
             
@@ -605,10 +621,12 @@ io.on('connection', (socket) => {
             }
           }
           
-          // Check if all players disconnected
-          if (room.players.every(p => !p.connected)) {
-            rooms.delete(roomId);
-            logger.info(`All players disconnected, room ${roomId} cleaned up`);
+          // Don't immediately delete room - give 2 minutes grace period for reconnection
+          const connectedPlayers = room.players.filter(p => p.connected);
+          if (connectedPlayers.length === 0) {
+            // Mark room for delayed cleanup instead of immediate deletion
+            room.disconnectionTime = Date.now();
+            logger.info(`All players disconnected from room ${roomId}, marked for cleanup in 2 minutes`);
           }
         }
       }

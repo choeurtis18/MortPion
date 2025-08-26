@@ -81,15 +81,19 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
               <div className="space-y-2 text-gray-600">
                 <div className="flex items-start gap-2">
                   <span className="text-blue-500 font-bold">P</span>
-                  <span>Petite pièce - peut aller partout</span>
+                  <span>Petite pièce - c'est la plus petite</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-blue-500 font-bold">M</span>
-                  <span>Moyenne pièce - peut aller sur case vide ou sur P</span>
+                  <span>Moyenne pièce - c'est la moyenne</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-blue-500 font-bold">G</span>
-                  <span>Grande pièce - peut aller sur case vide, P ou M</span>
+                  <span>Grande pièce - c'est la plus grande</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-blue-500 font-bold">G {">"} M {">"} P</span>
+                  <span>Ce qui veux dire que si l'adversaire place un P vous pouvez jouer un M ou un G par dessus</span>
                 </div>
               </div>
             </section>

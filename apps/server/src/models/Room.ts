@@ -27,6 +27,7 @@ export class Room {
   public game: Game;
   public replayVotes: Map<string, boolean>;
   public replayDeadline: number | null;
+  public disconnectionTime: number | null;
 
   constructor(options: RoomOptions) {
     if (!options.name || options.name.trim().length === 0) {
@@ -54,6 +55,7 @@ export class Room {
     this.game = new Game();
     this.replayVotes = new Map();
     this.replayDeadline = null;
+    this.disconnectionTime = null;
   }
 
   /**

@@ -17,15 +17,6 @@ class EmailService {
   private transporter: nodemailer.Transporter | null = null;
 
   constructor() {
-    console.log('Environment variables:', {
-      EMAIL_NOTIFICATIONS_ENABLED: process.env.EMAIL_NOTIFICATIONS_ENABLED,
-      ADMIN_EMAIL: process.env.ADMIN_EMAIL,
-      SMTP_HOST: process.env.SMTP_HOST,
-      SMTP_PORT: process.env.SMTP_PORT,
-      SMTP_USER: process.env.SMTP_USER,
-      SMTP_PASS: process.env.SMTP_PASS ? 'SET' : 'NOT SET'
-    });
-    
     this.config = {
       enabled: process.env.EMAIL_NOTIFICATIONS_ENABLED === 'true',
       adminEmail: process.env.ADMIN_EMAIL || '',

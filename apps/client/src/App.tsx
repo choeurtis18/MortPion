@@ -285,6 +285,8 @@ function App() {
             onVote={multiGame.castReplayVote}
             onReturnToLobby={multiGame.returnToLobby}
             showReturnToLobby={multiGame.showReturnToLobby}
+            winnerId={multiGame.gameState?.winnerId}
+            isDraw={multiGame.gameState?.isDraw}
           />
         )}
 
